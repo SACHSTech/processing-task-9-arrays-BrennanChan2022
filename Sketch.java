@@ -8,17 +8,26 @@ import processing.core.PApplet;
 public class Sketch extends PApplet {
 	
   float[] circleY = new float[25];
-  float circleYSpeed = 1;
+  float[] circleX = new float[25];
+  float playerX = 200;
+  float playerY = 200;
+
+  double circleYSpeed = 1;
+  int intLives = 3;
 
   boolean upPressed = false;
   boolean downPressed = false;
+  boolean WPressed = false;
+  boolean APressed = false;
+  boolean SPressed = false;
+  boolean DPressed = false;
 	
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
   public void settings() {
 	// put your size call here
-    size(300, 300);
+    size(400, 400);
   }
 
   /** 
@@ -28,6 +37,7 @@ public class Sketch extends PApplet {
   public void setup() {
     for (int i = 0; i < circleY.length; i++) {
       circleY[i] = random(height);
+      circleX[i] = random(width);
     }
   }
 
@@ -37,22 +47,37 @@ public class Sketch extends PApplet {
   public void draw() {
 	  background(50);
 
+    fill (255, 255, 255);
     for (int i = 0; i < circleY.length; i++) {
-      float circleX = width * i / circleY.length;
-      ellipse(circleX, circleY[i] * circleYSpeed, 25, 25);
+      ellipse(circleX[i], circleY[i], 40, 40);
 
-      circleY[i]++;
+      circleY[i] += circleYSpeed;
 
-      if (circleY[i] > height) {
+      if (circleY[i] > height + 20) {
         circleY[i] = 0;
       }
     }
 
     if (upPressed) {
-      circleYSpeed -= 0.5;
+      circleYSpeed = 0.5;
     }
     if (downPressed) {
-      circleYSpeed += 0.5;
+      circleYSpeed = 2;
+    }
+
+    fill (53, 171, 230);
+    ellipse(playerX, playerY, 25, 25);
+    if (WPressed) {
+      playerY--;
+    }
+    if (APressed) {
+      playerX--;
+    }
+    if (SPressed) {
+      playerY++;
+    }
+    if (DPressed) {
+      playerX++;
     }
   }
   
@@ -68,6 +93,18 @@ public class Sketch extends PApplet {
     else if (keyCode == DOWN) {
       downPressed = true;
     }
+    else if (key == 'w') {
+      WPressed = true;
+    }
+    else if (key == 'a') {
+      APressed = true;
+    }
+    else if (key == 's') {
+      SPressed = true;
+    }
+    else if (key == 'd') {
+      DPressed = true;
+    }
   }
   
   /**
@@ -81,6 +118,18 @@ public class Sketch extends PApplet {
     else if (keyCode == DOWN) {
       downPressed = false;
       circleYSpeed = 1;
+    }
+    else if (key == 'w') {
+      WPressed = false;
+    }
+    else if (key == 'a') {
+      APressed = false;
+    }
+    else if (key == 's') {
+      SPressed = false;
+    }
+    else if (key == 'd') {
+      DPressed = false;
     }
   }
 }
