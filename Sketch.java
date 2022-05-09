@@ -1,5 +1,10 @@
 import processing.core.PApplet;
 
+/**
+ * Description: A program that creates a game by defining arrays to animate a collection of circles that simulate snow falling.
+ * @author: B. Chan
+ */
+
 public class Sketch extends PApplet {
 	
   float[] circleY = new float[25];
