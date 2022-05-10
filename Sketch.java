@@ -7,27 +7,29 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
 	
-  float[] circleY = new float[25];
-  float[] circleX = new float[25];
-  float playerX = 200;
-  float playerY = 200;
+  float[] circleY = new float[45];
+  float[] circleX = new float[45];
+  boolean[] ballHideStatus = new boolean[45];
 
-  double circleYSpeed = 1;
-  int intLives = 3;
+  double dblSnowSpeed = 2;
 
-  boolean upPressed = false;
-  boolean downPressed = false;
+  float playerX = 250;
+  float playerY = 250;
+  boolean playerAlive = true;
+  int intPlayerLives = 3;
+
   boolean WPressed = false;
   boolean APressed = false;
   boolean SPressed = false;
   boolean DPressed = false;
+  boolean mouseClicked = false;
 	
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
   public void settings() {
 	// put your size call here
-    size(400, 400);
+    size(500, 500);
   }
 
   /** 
@@ -38,6 +40,7 @@ public class Sketch extends PApplet {
     for (int i = 0; i < circleY.length; i++) {
       circleY[i] = random(height);
       circleX[i] = random(width);
+      ballHideStatus[i] = false;
     }
   }
 
@@ -45,39 +48,56 @@ public class Sketch extends PApplet {
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-	  background(50);
+    if (playerAlive == true) {
+      background(50);
 
-    fill (255, 255, 255);
-    for (int i = 0; i < circleY.length; i++) {
-      ellipse(circleX[i], circleY[i], 40, 40);
+      for (int i = 0; i < circleY.length; i++) {
+        if (ballHideStatus[i] == false) {
+          fill (255, 255, 255);
+          ellipse(circleX[i], circleY[i], 40, 40);
+          circleY[i] += dblSnowSpeed;
+        }
 
-      circleY[i] += circleYSpeed;
+        if (circleY[i] > height + 20) {
+          circleY[i] = 0;
+        }
 
-      if (circleY[i] > height + 20) {
-        circleY[i] = 0;
+        if (dist(playerX, playerY, circleX[i], circleY[i]) <= (12.5 + 20) && ballHideStatus[i] == false) {
+          ballHideStatus[i] = true;
+          intPlayerLives--;
+        }
+        else if (dist(mouseX, mouseY, circleX[i], circleY[i]) <= 20 && mouseClicked) {
+          ballHideStatus[i] = true;
+        }
+      }
+
+      fill (53, 171, 230);
+      ellipse(playerX, playerY, 25, 25);
+      if (WPressed) {
+        playerY += -3;
+      }
+      if (APressed) {
+        playerX += -3;
+      }
+      if (SPressed) {
+        playerY += 3;
+      }
+      if (DPressed) {
+        playerX += 3;
+      }
+
+      for (int i = 1; i <= intPlayerLives; i++) {
+        fill(255, 0 ,0);
+        rect(320 + i * 45, 5, 40, 40);
+      }
+
+      if (intPlayerLives == 0) {
+        playerAlive = false;
       }
     }
 
-    if (upPressed) {
-      circleYSpeed = 0.5;
-    }
-    if (downPressed) {
-      circleYSpeed = 2;
-    }
-
-    fill (53, 171, 230);
-    ellipse(playerX, playerY, 25, 25);
-    if (WPressed) {
-      playerY--;
-    }
-    if (APressed) {
-      playerX--;
-    }
-    if (SPressed) {
-      playerY++;
-    }
-    if (DPressed) {
-      playerX++;
+    else if (playerAlive == false){
+      background(255, 255, 255);
     }
   }
   
@@ -88,10 +108,10 @@ public class Sketch extends PApplet {
    */
   public void keyPressed() {
     if (keyCode == UP) {
-      upPressed = true;
+      dblSnowSpeed = 1;
     }
     else if (keyCode == DOWN) {
-      downPressed = true;
+      dblSnowSpeed = 3;
     }
     else if (key == 'w') {
       WPressed = true;
@@ -112,12 +132,10 @@ public class Sketch extends PApplet {
    */
   public void keyReleased() {
     if (keyCode == UP) {
-      upPressed = false;
-      circleYSpeed = 1;
+      dblSnowSpeed = 2;
     }
     else if (keyCode == DOWN) {
-      downPressed = false;
-      circleYSpeed = 1;
+      dblSnowSpeed = 2;
     }
     else if (key == 'w') {
       WPressed = false;
@@ -131,5 +149,19 @@ public class Sketch extends PApplet {
     else if (key == 'd') {
       DPressed = false;
     }
+  }
+
+  /**
+   * S
+   */
+  public void mousePressed() {
+    mouseClicked = true;
+  }
+
+  /**
+   * S
+   */
+  public void mouseReleased() {
+    mouseClicked = false;
   }
 }
