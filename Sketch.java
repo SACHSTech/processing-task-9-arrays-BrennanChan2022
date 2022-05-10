@@ -52,16 +52,19 @@ public class Sketch extends PApplet {
       background(50);
 
       for (int i = 0; i < circleY.length; i++) {
+        if (ballHideStatus[i] == true) {
+          fill (50);
+          noStroke();
+          ellipse(circleX[i], circleY[i], 40, 40);
+          circleY[i] += dblSnowSpeed;
+        }
+      }
+
+      for (int i = 0; i < circleY.length; i++) {
         if (ballHideStatus[i] == false) {
           stroke(0,0,0);
           strokeWeight(1);
           fill (255, 255, 255);
-          ellipse(circleX[i], circleY[i], 40, 40);
-          circleY[i] += dblSnowSpeed;
-        }
-        else if (ballHideStatus[i] == true) {
-          fill (50);
-          noStroke();
           ellipse(circleX[i], circleY[i], 40, 40);
           circleY[i] += dblSnowSpeed;
         }
