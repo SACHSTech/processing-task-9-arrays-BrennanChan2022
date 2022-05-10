@@ -53,13 +53,22 @@ public class Sketch extends PApplet {
 
       for (int i = 0; i < circleY.length; i++) {
         if (ballHideStatus[i] == false) {
+          stroke(0,0,0);
+          strokeWeight(1);
           fill (255, 255, 255);
+          ellipse(circleX[i], circleY[i], 40, 40);
+          circleY[i] += dblSnowSpeed;
+        }
+        else if (ballHideStatus[i] == true) {
+          fill (50);
+          noStroke();
           ellipse(circleX[i], circleY[i], 40, 40);
           circleY[i] += dblSnowSpeed;
         }
 
         if (circleY[i] > height + 20) {
           circleY[i] = 0;
+          ballHideStatus[i] = false;
         }
 
         if (dist(playerX, playerY, circleX[i], circleY[i]) <= (12.5 + 20) && ballHideStatus[i] == false) {
@@ -94,7 +103,7 @@ public class Sketch extends PApplet {
       if (intPlayerLives == 0) {
         playerAlive = false;
       }
-    }
+    } 
 
     else if (playerAlive == false){
       background(255, 255, 255);
