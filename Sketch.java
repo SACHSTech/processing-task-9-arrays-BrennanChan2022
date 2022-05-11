@@ -7,9 +7,9 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
 	// Declare global variables
-  float[] circleY = new float[45];
-  float[] circleX = new float[45];
-  boolean[] ballHideStatus = new boolean[45];
+  float[] circleY = new float[50];
+  float[] circleX = new float[50];
+  boolean[] ballHideStatus = new boolean[50];
 
   double dblSnowSpeed = 2;
 
@@ -37,9 +37,9 @@ public class Sketch extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
-    // Create random coordinates for the falling snowballs
+    // Create random coordinates for the falling snowballs, begin 200 pixels from the bottom
     for (int i = 0; i < circleY.length; i++) {
-      circleY[i] = random(height - 50);
+      circleY[i] = random(-200, height - 200);
       circleX[i] = random(width);
       ballHideStatus[i] = false;
     }
