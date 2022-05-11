@@ -28,7 +28,7 @@ public class Sketch extends PApplet {
    * Called once at the beginning of execution, put your size all in this method
    */
   public void settings() {
-	// put your size call here
+    // put your size call here
     size(500, 500);
   }
 
@@ -49,7 +49,7 @@ public class Sketch extends PApplet {
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-    // If the player is stil alive, continue the gameplay
+    // If the player is stil alive, continue with the gameplay
     if (playerAlive == true) {
       background(50);
 
@@ -84,7 +84,7 @@ public class Sketch extends PApplet {
           ballHideStatus[i] = true;
           intPlayerLives--;
         }
-        // If the player clicks on a snowball with the mouse, hide the snowball
+        // If player clicks on a snowball with the mouse, hide the snowball
         else if (dist(mouseX, mouseY, circleX[i], circleY[i]) <= 20 && mouseClicked) {
           ballHideStatus[i] = true;
         }
@@ -128,7 +128,7 @@ public class Sketch extends PApplet {
   // define other methods down here.
 
   /**
-   * If user holds Up arrow, decrease falling speed of snowballs, and if Down arrow is held, increase falling speed of snowballs. Changes player-circle's X and Y coordinates when user presses/holds WASD controls, by setting the corresponding boolean value to true.
+   * When user holds Up arrow, decrease falling speed of snowballs, and if Down arrow is held, increase falling speed of snowballs. Changes player-circle's X and Y coordinates when user presses/holds WASD controls, by setting the corresponding boolean value to true.
    */
   public void keyPressed() {
     if (keyCode == UP) {
@@ -188,4 +188,5 @@ public class Sketch extends PApplet {
   public void mouseReleased() {
     mouseClicked = false;
   }
+
 }
